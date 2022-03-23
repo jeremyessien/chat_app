@@ -17,10 +17,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 3),
       vsync: this,
     );
-    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    animation = ColorTween(begin: Colors.blueAccent, end: Colors.white).animate(controller);
     controller.forward();
     controller.addListener(() {
       setState(() {
@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: animation.value*60,
+                    height: 60,
                   ),
                 ),
                 Text(
