@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "968328498789",
+    "project_id": "j-chat-app-3a674",
+    "storage_bucket": "j-chat-app-3a674.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968328498789:android:5cf171dec95bdd663b808c",
+        "android_client_info": {
+          "package_name": "com.jeremyessien.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968328498789-enj3bi73tup0peir92hen1j8t4b49kog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa-_2tTCW7Gzc6KJW369Jc_nWZBPvRe68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968328498789-enj3bi73tup0peir92hen1j8t4b49kog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
