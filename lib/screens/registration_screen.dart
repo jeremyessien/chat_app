@@ -61,7 +61,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             RoundButton(
               onPressed: () {
-                _auth.createUserWithEmailAndPassword(email: email, password: password);
+               final newUser = _auth.createUserWithEmailAndPassword(email: email, password: password);
               },
               title: "Register",
               color: Colors.blueAccent,
