@@ -1,7 +1,9 @@
 import 'package:chat_app/const.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/component/round_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'chat_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -61,12 +63,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             RoundButton(
               onPressed: () async {
-                final newUser = await _auth.createUserWithEmailAndPassword(
-                    email: email, password: password);
+                try {
+                  final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password);
+                  if(newUser!=null){
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  }
+                }
+                catch(e){
+                  print(e);
+                }
               },
               title: "Register",
               color: Colors.blueAccent,
-            )
+            ),
           ],
         ),
       ),
