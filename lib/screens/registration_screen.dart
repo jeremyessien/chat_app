@@ -60,8 +60,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 24.0,
             ),
             RoundButton(
-              onPressed: () {
-               final newUser = _auth.createUserWithEmailAndPassword(email: email, password: password);
+              onPressed: () async {
+                final newUser = await _auth.createUserWithEmailAndPassword(
+                    email: email, password: password);
               },
               title: "Register",
               color: Colors.blueAccent,
