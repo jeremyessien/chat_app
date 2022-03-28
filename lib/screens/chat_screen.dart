@@ -12,6 +12,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
   User loggedInUser;
   String message;
 
@@ -69,7 +70,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      //Implement send functionality.
+                      _firestore
+                          .collection('messages')
+                          .add({'text': message, 'sender': loggedInUser.email});
                     },
                     child: Text(
                       'Send',
