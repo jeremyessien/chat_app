@@ -55,6 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   child: DefaultTextStyle(
                     style: TextStyle(
                       fontSize: 45.0,
+                      color: Colors.black,
                       fontWeight: FontWeight.w900,
                     ),
                     child: AnimatedTextKit(
