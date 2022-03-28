@@ -14,7 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                email = value;
               },
               decoration: TextFieldDecoration.copyWith(hintText: "Enter your email"),
             ),
@@ -49,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                //Do something with the user input.
-              },
+                   password = value;
+                },
               decoration: TextFieldDecoration.copyWith(hintText: 'Enter your passsword')
             ),
             SizedBox(
