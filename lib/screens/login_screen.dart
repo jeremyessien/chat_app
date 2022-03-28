@@ -60,10 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundButton(
               onPressed: () async {
-                final newUser = await _auth.signInWithEmailAndPassword(
-                    email: email, password: password);
-                if(newUser!= null){
-                  Navigator.pushNamed(context, ChatScreen.id);
+                try {
+                  final newUser = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
+                  if (newUser != null) {
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  }
+                } catch (e) {
+                  print(e);
                 }
               },
               title: "Login",
