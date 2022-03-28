@@ -1,5 +1,6 @@
 import 'package:chat_app/component/round_button.dart';
 import 'package:chat_app/const.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -41,7 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 email = value;
               },
-              decoration: TextFieldDecoration.copyWith(hintText: "Enter your email"),
+              decoration:
+                  TextFieldDecoration.copyWith(hintText: "Enter your email"),
             ),
             SizedBox(
               height: 8.0,
@@ -49,15 +51,21 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                   password = value;
+                  password = value;
                 },
-              decoration: TextFieldDecoration.copyWith(hintText: 'Enter your passsword')
-            ),
+                decoration: TextFieldDecoration.copyWith(
+                    hintText: 'Enter your passsword')),
             SizedBox(
               height: 24.0,
             ),
             RoundButton(
-              onPressed: () {},
+              onPressed: () async {
+                final newUser = await _auth.signInWithEmailAndPassword(
+                    email: email, password: password);
+                if(newUser!= null){
+                  Navigator.pushNamed(context, ChatScreen.id);
+                }
+              },
               title: "Login",
               color: Colors.lightBlueAccent,
             )
