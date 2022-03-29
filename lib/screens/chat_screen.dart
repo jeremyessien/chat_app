@@ -34,6 +34,9 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void getMessages()async {
+   final messages = await _firestore.collection('messages').get();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
