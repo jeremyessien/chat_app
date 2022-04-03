@@ -1,3 +1,5 @@
+// ignore_for_file: await_only_futures
+
 import 'package:flutter/material.dart';
 import 'package:chat_app/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,6 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder(builder: , stream: _firestore.collection('messages').snapshots(),)
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
