@@ -1,12 +1,11 @@
 // ignore_for_file: await_only_futures, missing_return
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _firestore = FirebaseFirestore.instance;
+User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -18,7 +17,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  User loggedInUser;
   String message;
 
   @override
@@ -41,7 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void messageStream() async {
     await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var messsage in snapshot.docs) {}
+      for (var messsage in snapshot.docs) {
+        print(messsage);
+      }
     }
   }
 
@@ -129,10 +129,12 @@ class MessagesStream extends StatelessWidget {
         for (var message in messages) {
           final messageText = message['text'];
           final messageSender = message['sender'];
+          final currentUser = loggedInUser.email;
 
           final messageBubble = MessageBubble(
             sender: '$messageSender',
             text: '$messageText',
+            isMe: currentUser == messageSender,
           );
           messageBubbles.add(messageBubble);
         }
@@ -150,8 +152,9 @@ class MessagesStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({this.sender, this.text});
+  MessageBubble({this.sender, this.text, this.isMe});
 
+  final bool isMe;
   final String sender;
   final String text;
 
@@ -173,13 +176,14 @@ class MessageBubble extends StatelessWidget {
               bottomRight: Radius.circular(30.0),
             ),
             elevation: 5.0,
-            color: Colors.lightBlueAccent,
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
               child: Text(
                 text,
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 16, color: isMe ? Colors.white : Colors.black54),
               ),
             ),
           ),
