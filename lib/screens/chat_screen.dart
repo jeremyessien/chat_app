@@ -1,9 +1,11 @@
 // ignore_for_file: await_only_futures, missing_return
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 final _firestore = FirebaseFirestore.instance;
 
 class ChatScreen extends StatefulWidget {
@@ -108,6 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
 class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -135,8 +138,7 @@ class MessagesStream extends StatelessWidget {
         }
         return Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 10.0, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
             child: ListView(
               children: messageBubbles,
             ),
@@ -165,7 +167,11 @@ class MessageBubble extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.black54),
           ),
           Material(
-            borderRadius: BorderRadius.circular(40.0),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30.0),
+            ),
             elevation: 5.0,
             color: Colors.lightBlueAccent,
             child: Padding(
