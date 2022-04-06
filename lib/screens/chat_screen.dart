@@ -1,4 +1,4 @@
-// ignore_for_file: await_only_futures
+// ignore_for_file: await_only_futures, missing_return
 
 import 'package:flutter/material.dart';
 import 'package:chat_app/const.dart';
@@ -69,12 +69,31 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // ignore: missing_return
-            StreamBuilder(builder: (context, snapshot ){
-              if(snapshot.hasData){
-                final messages = snapshot.data;
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (context, snapshot ){
+              if(!snapshot.hasData){
+                return Center(
+                  child: CircularProgressIndicator(
+                  backgroundColor: Colors.lightBlueAccent,
+                  ),
+                );
               }
-            }, stream: _firestore.collection('messages').snapshots(),),
+                final messages = snapshot.data.docs;
+                List<Text> messageWidgets =[];
+                for (var message in messages){
+                  final messageText = message.data;
+                  final messageSender = message.data;
+
+                  final messageWidget = Text('$messageText from $messageSender',);
+                  messageWidgets.add(messageWidget);
+
+                }
+                return ListView(
+                  children: messageWidgets,
+                );
+
+            },),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
