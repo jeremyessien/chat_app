@@ -32,6 +32,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: animation.value,
@@ -50,20 +56,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: 60,
                   ),
                 ),
-                SizedBox(
-                  width: 50,
-                  child: DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 45.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w900,
-                    ),
-                    child: AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText('Flash Chat'),
-                      ],
-                    ),
-                  ),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText('Flash Chat', textStyle: TextStyle(fontSize: 45.0, fontWeight: FontWeight.w900)),
+                    
+                  ],
                 ),
               ],
             ),
@@ -90,4 +87,3 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
   }
 }
-
