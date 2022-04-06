@@ -35,11 +35,13 @@ class _ChatScreenState extends State<ChatScreen> {
       print(e);
     }
   }
-  void messageStream () async{
-    await for (var snapshot in _firestore.collection('messages').snapshots()){
-     for (var messsage in snapshot.docs){}
+
+  void messageStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var messsage in snapshot.docs) {}
     }
   }
+
   // void getMessages() async {
   //   final messages = await _firestore.collection('messages').get();
   //   for (var message in messages.docs) {
@@ -71,34 +73,37 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             StreamBuilder<QuerySnapshot>(
               stream: _firestore.collection('messages').snapshots(),
-              builder: (context, snapshot ){
-              if(!snapshot.hasData){
-                return Center(
-                  child: CircularProgressIndicator(
-                  backgroundColor: Colors.lightBlueAccent,
-                  ),
-                );
-              }
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.lightBlueAccent,
+                    ),
+                  );
+                }
                 final messages = snapshot.data.docs;
-                List<MessageBubble> messageBubbles =[];
-                for (var message in messages){
+                List<MessageBubble> messageBubbles = [];
+                for (var message in messages) {
                   final messageText = message.data;
                   final messageSender = message.data;
 
-                  final messageBubble = MessageBubble(sender: '$messageSender',text: '$messageText',);
+                  final messageBubble = MessageBubble(
+                    sender: '$messageSender',
+                    text: '$messageText',
+                  );
                   messageBubbles.add(messageBubble);
-
                 }
                 return Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 20),
                     child: ListView(
                       children: messageBubbles,
                     ),
                   ),
                 );
-
-            },),
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -134,26 +139,37 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble ({this.sender, this.text});
+  MessageBubble({this.sender, this.text});
+
   final String sender;
   final String text;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.all(10.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(40.0),
-        elevation: 5.0,
-        color: Colors.lightBlueAccent,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-          child: Text(
-            '$text from $sender',
-              style: TextStyle(fontSize: 16, color: Colors.white),
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            sender,
+            style: TextStyle(fontSize: 12, color: Colors.black54),
           ),
-        ),
+          Material(
+            borderRadius: BorderRadius.circular(40.0),
+            elevation: 5.0,
+            color: Colors.lightBlueAccent,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
