@@ -37,21 +37,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void messageStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var messsage in snapshot.docs) {
-        print(messsage);
-      }
-    }
-  }
-
-  // void getMessages() async {
-  //   final messages = await _firestore.collection('messages').get();
-  //   for (var message in messages.docs) {
-  //     print(message.data);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +46,8 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                messageStream();
-                // _auth.signOut();
-                // Navigator.pop(context);
+                _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -124,7 +108,7 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data.docs.reversed;
         List<MessageBubble> messageBubbles = [];
         for (var message in messages) {
           final messageText = message['text'];
@@ -139,11 +123,10 @@ class MessagesStream extends StatelessWidget {
           messageBubbles.add(messageBubble);
         }
         return Expanded(
-          child: Padding(
+          child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
-            child: ListView(
-              children: messageBubbles,
-            ),
+            reverse: true,
+            children: messageBubbles,
           ),
         );
       },
@@ -171,11 +154,17 @@ class MessageBubble extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.black54),
           ),
           Material(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30.0),
-            ),
+            borderRadius: isMe
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30.0),
+                  )
+                : BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
             elevation: 5.0,
             color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
