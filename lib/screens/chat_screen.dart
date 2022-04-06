@@ -89,6 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   TextButton(
                     onPressed: () {
+                      messageTextController.clear();
                       _firestore
                           .collection('messages')
                           .add({'text': message, 'sender': loggedInUser.email});
@@ -123,8 +124,8 @@ class MessagesStream extends StatelessWidget {
         final messages = snapshot.data.docs;
         List<MessageBubble> messageBubbles = [];
         for (var message in messages) {
-          final messageText = message.data;
-          final messageSender = message.data;
+          final messageText = message['text'];
+          final messageSender = message['sender'];
 
           final messageBubble = MessageBubble(
             sender: '$messageSender',
